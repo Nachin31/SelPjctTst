@@ -10,7 +10,8 @@ import pages.GmailPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 /**
@@ -21,8 +22,14 @@ public class TestGmail {
     
     private WebDriver driver;
     
-    public TestGmail() {
-           
+    @BeforeSuite
+    public void beforeSuite() throws Exception {
+        //Open the url which we want in firefox
+        System.setProperty("webdriver.chrome.driver","src\\drivers\\chromedriver.exe");
+        //Here we initialize the firefox webdriver
+        driver=new ChromeDriver();
+        
+        driver.get("https://mail.google.com/mail/u/0/#inbox");
     }
 
     @Test
@@ -31,24 +38,18 @@ public class TestGmail {
         GmailPage page = new GmailPage();
         
         page.setDriver(driver);
-        page.setEmail("gomez.ignacio31@gmail.com");
+        page.setEmail("TU EMAIL");
         page.clickNext();
-        page.setPassword("TU_PASS");
+        page.setPassword("TU PASS");
         page.clickSignIn();
         
-        Assert.assertEquals(page.getUserName(),"Jose Ignacio");
+        Assert.assertEquals(page.getUserName(),"NOMBRE ESPERADO");
         
     }
-
-    @BeforeTest
-    public void beforeTest() throws Exception {
-        System.out.println("BeforeTest corrio");
-        //Open the url which we want in firefox
-        System.setProperty("webdriver.chrome.driver","src\\drivers\\chromedriver.exe");
-        //Here we initialize the firefox webdriver
-        driver=new ChromeDriver();
-        
-        driver.get("https://mail.google.com/mail/u/0/#inbox");
+    
+    @AfterSuite(alwaysRun = true)
+    public void afterSuite(){
+        driver.quit();
     }
     
 }
