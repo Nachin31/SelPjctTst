@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="SeleniumTestProject" verbose = "2">
+    <test name="Login Test">
+        <parameter name="username" value="pepe" />
+        <parameter name="password" value="1234" />
+        <classes>
+           <class name="systemTests.tests.LoginTest">
+                <methods>
+                    <include name="test_loginSuccessful"/>
+                 </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
