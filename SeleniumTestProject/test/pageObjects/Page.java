@@ -7,7 +7,6 @@ package pageObjects;
 
 import org.openqa.selenium.By;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Condition.*;
 import com.codeborne.selenide.SelenideElement;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +45,38 @@ public class Page {
     public void clickButton(String buttonName){
         SelenideElement button = $(buttons.get(buttonName));
         button.click();
+    }
+    
+    public String getCssAttribute(String type,String name,String property){
+        SelenideElement element = null;
+        
+        switch(type){
+            case "Button":
+                element = $(buttons.get(name));
+                break;
+            case "TextField":
+                element = $(inputs.get(name));
+                break;
+        }
+        
+        return element.getCssValue(property);
+        
+    }
+    
+    public String getHtmlAttribute(String type,String name,String property){
+        SelenideElement element = null;
+        
+        switch(type){
+            case "Button":
+                element = $(buttons.get(name));
+                break;
+            case "TextField":
+                element = $(inputs.get(name));
+                break;
+        }
+        
+        return element.getAttribute(property);
+        
     }
     
 }

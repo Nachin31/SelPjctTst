@@ -4,9 +4,15 @@
     <test name="Login Test">
         <parameter name="username" value="pepe" />
         <parameter name="password" value="1234" />
+        <parameter name="wrongUsername" value="alfon" />
+        <parameter name="wrongPassword" value="9999" />
         <classes>
            <class name="systemTests.tests.LoginTest">
                 <methods>
+                    <include name="test_loginUnsuccessful_EmptyFields"/>
+                    <include name="test_loginUnsuccessful_EmptyField"/>
+                    <include name="test_loginUnsuccessful_UnexistentUser"/>
+                    <include name="test_loginUnsuccessful_WrongPassword"/>
                     <include name="test_loginSuccessful"/>
                  </methods>
             </class>
