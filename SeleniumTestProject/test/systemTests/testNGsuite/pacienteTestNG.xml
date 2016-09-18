@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="SeleniumTestProject" verbose = "2">
+    <parameter name="username" value="pepe" />
+    <parameter name="password" value="1234" />
+    <test name="Usuario Test">
+        <parameter name="nombreBusqueda" value="Juli" />
+        <parameter name="resultadosBusquedaNombre" value="Albertengo, Julian;Marengo, Julieta" />
+        <parameter name="apellidoBusqueda" value="Reynoso" />
+        <parameter name="resultadosBusquedaApellido" value="Reynoso, Ana Maria;Reynoso, Hernán" />
+        <parameter name="apellidoynombreBusqueda" value="Alberto, Juan" />
+        <parameter name="resultadosBusquedaApellidoYNombre" value="Alberto, Juan" />
+        <parameter name="apellidoynombreBusquedaSinResultado" value="Ana Lia" />
+        <parameter name="pacienteCarenteDeDatos" value="Pedroso, Gabriela" />
+        <parameter name="pacienteACrear" value="Pacientest;PTUno;11222333;Pedro de Vega 2314;4608833;34245789245;25/05/1995;OSDE;5468974626" />
+        <parameter name="pacienteAEditar" value="Pacientest;PTUno;11222333;Ricardo Aldao 1152;;34245111222;25/05/1995;JERARQUICOS SALUD;14258796" />
+        
+        <classes>
+           <class name="systemTests.tests.PacienteTest">
+                <methods>
+                    <include name="test_breadCrumb"/>
+                    <include name="test_resultadosBusquedaPorNombre"/>
+                    <include name="test_resultadosBusquedaPorApellido"/>
+                    <include name="test_resultadosBusquedaPorNombreYApellido"/>
+                    <include name="test_busquedaSinResultado"/>
+                    <include name="test_busquedaPacienteCarenteDeAlgunosDatos"/>
+                    <include name="test_camposObligatoriosAlCrearPaciente"/>
+                    <include name="test_creacionCanceladaDePaciente"/>
+                    <include name="test_creacionExitosaPaciente"/>
+                    <!--<include name="test_imposibleCrearPacienteExistente"/>-->
+                    <include name="test_campsObligatoriosAlEditarPaciente"/>
+                    <include name="test_edicionPacienteCancelada"/>
+                    <include name="test_edicionPacienteExitosa"/>
+                    <include name="test_cancelarEliminacionPaciente"/>
+                    <include name="test_eliminacionExitosaPaciente"/>
+                    
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

@@ -37,7 +37,7 @@ public class LoginTest {
         Configuration.reportsFolder = "F:\\";
         
         //Open the url which we want in Chrome
-        open("http://localhost:40053/pfc-gmz/");
+        open("http://localhost:40053/deltagestion/");
         
         loginPage = new LoginPage();
         commonElementsPage = new CommonElementsPage();
@@ -54,8 +54,8 @@ public class LoginTest {
         Assert.assertEquals(loginPage.getToasterMessageCount(),2);
         
         //Estilo y texto de cada mensaje de error
-        Assert.assertTrue(loginPage.messageDisplayed("Error","Ingrese el usuario"));
-        Assert.assertTrue(loginPage.messageDisplayed("Error","Ingrese la contraseña"));
+        Assert.assertTrue(loginPage.toasterMessageDisplayed("Error","Ingrese el usuario"));
+        Assert.assertTrue(loginPage.toasterMessageDisplayed("Error","Ingrese la contraseña"));
         
         //Error en los inputs
         Assert.assertEquals(loginPage.getErrorMessage(),"Error al iniciar sesión. Intente nuevamente");
@@ -79,7 +79,7 @@ public class LoginTest {
         Assert.assertEquals(loginPage.getToasterMessageCount(),1);
         
         //Estilo y texto de cada mensaje de error
-        Assert.assertTrue(loginPage.messageDisplayed("Error","Ingrese la contraseña"));
+        Assert.assertTrue(loginPage.toasterMessageDisplayed("Error","Ingrese la contraseña"));
         
         //Error en los inputs
         Assert.assertEquals(loginPage.getErrorMessage(),"Error al iniciar sesión. Intente nuevamente");
