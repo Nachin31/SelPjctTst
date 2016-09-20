@@ -18,8 +18,6 @@ import pageObjects.LoginPage;
 import pageObjects.PacienteListPage;
 import static com.codeborne.selenide.Selenide.open;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pageObjects.PacienteCreatePage;
 import pageObjects.PacienteEditPage;
 

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="SeleniumTestProject" verbose = "2">
+    <parameter name="username" value="pepe" />
+    <parameter name="password" value="1234" />
+    <test name="Tratamiento Test">
+        <parameter name="pacienteSinTratamientos" value="Gonzales, Alfredo" />
+
+        <classes>
+           <class name="systemTests.tests.TratamientoTest">
+                <methods>
+<!--                    <include name="test_listaTratamientoVacia"/>
+                    <include name="test_validacionTiposTratamientosParticulares"/>-->
+                    <include name="test_validacionesCreacionTratamiento"/>
+                    
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

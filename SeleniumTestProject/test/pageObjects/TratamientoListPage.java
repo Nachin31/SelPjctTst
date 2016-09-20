@@ -11,28 +11,25 @@ import static com.codeborne.selenide.Selenide.$$;
 import com.codeborne.selenide.SelenideElement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.openqa.selenium.By;
 
 /**
  *
  * @author Nacho Gómez
  */
-public class PacienteListPage extends Page {
+public class TratamientoListPage extends Page {
     
     private By headers_locator = By.tagName("th");
-    private By filasTabla_locator = By.cssSelector("#PacienteListForm\\:datalist tr");
-    private By paginatorNextPage_locator = By.cssSelector("#PacienteListForm\\:datalist_paginator_bottom a[aria-label=Next\\ Page]");
-    private By paginatorFirstPage_locator = By.cssSelector("#PacienteListForm\\:datalist_paginator_bottom a[aria-label=Page\\ 1]");
+    private By filasTabla_locator = By.cssSelector("#TratamientoListForm\\:datalist tr");
+    private By paginatorNextPage_locator = By.cssSelector("#TratamientoListForm\\:datalist_paginator_bottom a[aria-label=Next\\ Page]");
+    private By paginatorFirstPage_locator = By.cssSelector("#TratamientoListForm\\:datalist_paginator_bottom a[aria-label=Page\\ 1]");
     private By mensajeListaVacia_locator = By.className("ui-datatable-empty-message");
     private By toasterPopupDivs_locator = By.cssSelector("#growl_container > div");
     private By confirmDeleteButtons_locator = By.cssSelector(".ui-confirm-dialog button");
     
-    public PacienteListPage(){
+    public TratamientoListPage(){
         super();
-        add("TextField","FiltroPaciente",By.id("PacienteListForm:datalist:globalFilter"));
-        add("Button","AgregarPaciente",By.id("PacienteListForm:datalist:createButton"));
+        add("Button","AgregarTratamiento",By.id("TratamientoListForm:datalist:createButton"));
     }
     
     public List<String[]> getValuesList(String ... columnasDeseadas){
@@ -90,15 +87,15 @@ public class PacienteListPage extends Page {
         return msj;
     }
     
-    public String[] buscarPaciente(String nombreyap){
-        return buscarPaciente(nombreyap,null);
+    public String[] buscarPaciente(String tipoTratamiento,String sesiones){
+        return buscarTratamiento(tipoTratamiento,sesiones,null);
     }
     
     //Este método asume que se busca un paciente de nombre único
-    public String[] buscarPaciente(String nombreyap,String action){
+    public String[] buscarTratamiento(String tipoTratamiento,String sesiones,String action){
         
         int pagina = 0;
-        String[] paciente = null;
+        String[] tratamiento = null;
         
         $(paginatorFirstPage_locator).click();
         
@@ -112,20 +109,22 @@ public class PacienteListPage extends Page {
             List<SelenideElement> filas = $$(filasTabla_locator);
             filas = filas.subList(1,filas.size()); //Removemos el header de la talba}
                     
-            for(int j=0;j<filas.size() && paciente== null;j++){
+            for(int j=0;j<filas.size() && tratamiento== null;j++){
                 SelenideElement f = filas.get(j);
-                if(f.$$(By.tagName("td")).get(0).getText().equals(nombreyap)){
-                    paciente = new String[6];
-                    paciente[0] = f.$$(By.tagName("td")).get(0).getText();
-                    paciente[1] = f.$$(By.tagName("td")).get(1).getText();
-                    paciente[2] = f.$$(By.tagName("td")).get(2).getText();
-                    paciente[3] = f.$$(By.tagName("td")).get(3).getText();
-                    paciente[4] = f.$$(By.tagName("td")).get(4).getText();
-                    paciente[5] = f.$$(By.tagName("td")).get(5).getText();
+                if(f.$$(By.tagName("td")).get(1).getText().equals(tipoTratamiento)
+                    && f.$$(By.tagName("td")).get(3).getText().split("/")[1].equals(sesiones)){
+                    tratamiento = new String[7];
+                    tratamiento[0] = f.$$(By.tagName("td")).get(0).getText();
+                    tratamiento[1] = f.$$(By.tagName("td")).get(1).getText();
+                    tratamiento[2] = f.$$(By.tagName("td")).get(2).getText();
+                    tratamiento[3] = f.$$(By.tagName("td")).get(3).getText();
+                    tratamiento[4] = f.$$(By.tagName("td")).get(4).getText();
+                    tratamiento[5] = f.$$(By.tagName("td")).get(5).getText();
+                    tratamiento[6] = f.$$(By.tagName("td")).get(6).getText();
                     if(action==null);
                     else if(action.equals("Editar"))
                         f.$$(By.tagName("td")).get(6).$$(By.tagName("button")).get(0).click();
-                    else if(action.equals("Tratamientos"))
+                    else if(action.equals("GenerarConsentimiento"))
                         f.$$(By.tagName("td")).get(6).$$(By.tagName("button")).get(1).click();
                     else if(action.equals("Eliminar"))
                         f.$$(By.tagName("td")).get(6).$$(By.tagName("button")).get(2).click();
@@ -134,13 +133,13 @@ public class PacienteListPage extends Page {
             
             pagina++;
             
-        }while(paciente==null && !$(paginatorNextPage_locator).getAttribute("class").contains("ui-state-disabled"));
+        }while(!$(paginatorNextPage_locator).getAttribute("class").contains("ui-state-disabled") && tratamiento==null);
         
-        return paciente;
+        return tratamiento;
         
     }
     
-    public void confirmPacienteDelete(boolean confirm){
+    public void confirmTratamientoDelete(boolean confirm){
         if(confirm)
             $$(confirmDeleteButtons_locator).get(0).click();
         else
