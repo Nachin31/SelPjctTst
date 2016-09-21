@@ -21,11 +21,12 @@ public class TratamientoCreatePage extends Page {
     private By tipoTratamientoSelect_locator = By.cssSelector("#TratamientoCreateForm\\:tipoDeTratamiento > div");//Index 2
     private By tipoTratamientoList_locator = By.cssSelector("#TratamientoCreateForm\\:tipoDeTratamiento_panel > div > ul > li");
     private By particularCheckboxes_locator = By.cssSelector("#TratamientoCreateForm\\:particular div");//Index 2 para Particular, Index 5 para Obra social
+    private By selectedTipoTratamientoLabel_locator = By.id("TratamientoCreateForm:tipoDeTratamiento_label");
     
     public TratamientoCreatePage(){
         super();
         add("TextField","CantidadDeSesiones",By.id("TratamientoCreateForm:cantidadDeSesiones"));
-        add("TextField","TipoDeTratamiento",By.id("TratamientoCreateForm:tipoDeTratamiento_label"));
+        add("TextField","TipoDeTratamiento",By.id("TratamientoCreateForm:tipoDeTratamiento"));
         add("TextField","Diagnostico",By.id("TratamientoCreateForm:diagnostico"));
         add("TextField","Observaciones",By.id("TratamientoCreateForm:observaciones"));
         add("Label","TipoDeTratamiento",By.id("TratamientoCreateForm:tipoTratamientoLbl"));
@@ -91,5 +92,8 @@ public class TratamientoCreatePage extends Page {
         
     }
     
+    public String getSelectedTratamiento(){
+        return $(selectedTipoTratamientoLabel_locator).getText();
+    }
     
 }

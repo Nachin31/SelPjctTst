@@ -30,7 +30,8 @@ public class TratamientoEditPage extends Page {
         add("TextField","CantidadDeSesiones",By.id("TratamientoEditForm:cantidadDeSesiones"));
         add("TextField","Observaciones",By.id("TratamientoEditForm:observaciones"));
         add("Label","TipoTratamiento",By.id("TratamientoEditForm:tipoTratamiento"));
-        add("Label","Particular",By.id("TratamientoEditForm:particularl"));
+        add("Label","Particular",By.id("TratamientoEditForm:particular"));
+        add("Label","CantidadDeSesiones",By.id("TratamientoEditForm:cantidadDeSesionesLbl"));
         add("Button","Cancelar",By.id("TratamientoEditForm:cancelEditTratamiento"));
         add("Button","Guardar",By.id("TratamientoEditForm:confirmEditTratamiento"));
         add("Button","CrearOrdenMedica",By.id("OrdenTratamientoListForm:ordenMedicasTratamientoList:ordenMedicaCreateButton"));

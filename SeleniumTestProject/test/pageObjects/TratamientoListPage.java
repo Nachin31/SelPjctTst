@@ -87,7 +87,7 @@ public class TratamientoListPage extends Page {
         return msj;
     }
     
-    public String[] buscarPaciente(String tipoTratamiento,String sesiones){
+    public String[] buscarTratamiento(String tipoTratamiento,String sesiones){
         return buscarTratamiento(tipoTratamiento,sesiones,null);
     }
     
@@ -123,17 +123,17 @@ public class TratamientoListPage extends Page {
                     tratamiento[6] = f.$$(By.tagName("td")).get(6).getText();
                     if(action==null);
                     else if(action.equals("Editar"))
-                        f.$$(By.tagName("td")).get(6).$$(By.tagName("button")).get(0).click();
+                        f.$$(By.tagName("td")).get(7).$$(By.tagName("button")).get(0).click();
                     else if(action.equals("GenerarConsentimiento"))
-                        f.$$(By.tagName("td")).get(6).$$(By.tagName("button")).get(1).click();
+                        f.$$(By.tagName("td")).get(7).$$(By.tagName("button")).get(1).click();
                     else if(action.equals("Eliminar"))
-                        f.$$(By.tagName("td")).get(6).$$(By.tagName("button")).get(2).click();
+                        f.$$(By.tagName("td")).get(7).$$(By.tagName("button")).get(2).click();
                 }
             }
             
             pagina++;
             
-        }while(!$(paginatorNextPage_locator).getAttribute("class").contains("ui-state-disabled") && tratamiento==null);
+        }while(tratamiento==null && !$(paginatorNextPage_locator).getAttribute("class").contains("ui-state-disabled"));
         
         return tratamiento;
         

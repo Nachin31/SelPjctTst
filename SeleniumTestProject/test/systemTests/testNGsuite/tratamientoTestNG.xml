@@ -5,13 +5,24 @@
     <parameter name="password" value="1234" />
     <test name="Tratamiento Test">
         <parameter name="pacienteSinTratamientos" value="Gonzales, Alfredo" />
-
+        <parameter name="tratmientoACrearParticular" value="Kinesioterapia;5;Particular;Esguince de tobillo;La lesión parece grave" />
+        <parameter name="tratmientoACrearObraSocial" value="Fisioterapia;10;Obra Social;Desgarro de cuádriceps;-" />
+        
         <classes>
            <class name="systemTests.tests.TratamientoTest">
                 <methods>
-<!--                    <include name="test_listaTratamientoVacia"/>
-                    <include name="test_validacionTiposTratamientosParticulares"/>-->
+                    <include name="test_listaTratamientoVacia"/>
+                    <include name="test_validacionTiposTratamientosParticulares"/>
                     <include name="test_validacionesCreacionTratamiento"/>
+                    <include name="test_cancelarCreacionTratamiento"/>
+                    <include name="test_creacionTratamientoParticularExitosa"/>
+                    <include name="test_creacionTratamientoObraSocialExitosa"/>
+                    <include name="test_validarListaTratamientosPaciente"/>
+                    <include name="test_validacionSesionesDuranteEdicionDeUnTratamiento"/>
+                    <include name="test_edicionExitosaDatosGeneralesTratamiento"/>
+                    <include name="test_cancelarEliminacionDeTratamiento"/>
+                    <include name="test_eliminacionExitosaTratamientoConVariosListados"/>
+                    <include name="test_eliminacionExitosaTratamientoUnicoListado"/>
                     
                 </methods>
             </class>
