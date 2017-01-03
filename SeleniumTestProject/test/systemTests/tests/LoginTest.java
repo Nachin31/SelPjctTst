@@ -29,7 +29,7 @@ public class LoginTest {
     @BeforeSuite
     public void beforeSuite() throws Exception {
         //We set driver parameters
-        System.setProperty("webdriver.chrome.driver","src\\drivers\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver","src\\drivers\\chromedriver_2.27.exe");
         System.setProperty("selenide.browser", "Chrome");
         
         //General parameters
@@ -37,7 +37,7 @@ public class LoginTest {
         Configuration.reportsFolder = "F:\\";
         
         //Open the url which we want in Chrome
-        open("http://localhost:40053/deltagestion/");
+        open("http://localhost:19992/deltagestion/");
         
         loginPage = new LoginPage();
         commonElementsPage = new CommonElementsPage();
