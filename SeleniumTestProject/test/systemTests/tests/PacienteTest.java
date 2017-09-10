@@ -5,27 +5,23 @@
  */
 package systemTests.tests;
 
-import com.codeborne.selenide.Configuration;
-import static com.codeborne.selenide.Selenide.open;
 import java.util.List;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pageObjects.CommonElementsPage;
-import pageObjects.LoginPage;
-import pageObjects.PacienteListPage;
-import static com.codeborne.selenide.Selenide.open;
+import pageObjects.commonPageObjects.CommonElementsPage;
+import pageObjects.commonPageObjects.LoginPage;
+import pageObjects.pacientePageObjects.PacienteListPage;
 import java.util.Calendar;
-import pageObjects.PacienteCreatePage;
-import pageObjects.PacienteEditPage;
+import org.testng.annotations.BeforeClass;
+import pageObjects.pacientePageObjects.PacienteCreatePage;
+import pageObjects.pacientePageObjects.PacienteEditPage;
 
 /**
  *
  * @author Nacho Gómez
  */
-public class PacienteTest {
+public class PacienteTest extends AutomatedTest{
 
     private LoginPage loginPage;
     private CommonElementsPage commonElementsPage;
@@ -33,19 +29,9 @@ public class PacienteTest {
     private PacienteCreatePage pacienteCrearPage;
     private PacienteEditPage pacienteEditPage;
 
-    @BeforeSuite
+    @BeforeClass
     @Parameters({"username", "password"})
-    public void beforeSuite(String username, String password) throws Exception {
-        //We set driver parameters
-        System.setProperty("webdriver.chrome.driver", "src\\drivers\\chromedriver_2.27.exe");
-        System.setProperty("selenide.browser", "Chrome");
-
-        //General parameters
-        Configuration.timeout = 20000;
-        Configuration.reportsFolder = "F:\\";
-
-        //Open the url which we want in Chrome
-        open("http://localhost:19992/deltagestion/faces/protected/paciente/List.xhtml");
+    public void beforeClass(String username, String password) throws Exception {
 
         loginPage = new LoginPage();
         commonElementsPage = new CommonElementsPage();
@@ -71,8 +57,9 @@ public class PacienteTest {
         String[] resultadoBusquedaNombre = resultadosBusquedaNombre.split(";");
 
         pacienteListPage.completeTextField("FiltroPaciente", nombreBusqueda);
+        pacienteListPage.clickToOrderByName();
 
-        List<String[]> valores = pacienteListPage.getValuesList("Apellido, Nombre");
+        List<String[]> valores = pacienteListPage.obtenerListaDeValoresTabla("Pacientes","Apellido, Nombre");
 
         //Validamos apellidos y nombres listados (que todos los esperados aparezcan, y en orden)
         for (int i = 0; i < resultadoBusquedaNombre.length; i++) {
@@ -93,8 +80,9 @@ public class PacienteTest {
         String[] resultadoBusquedaApellido = resultadosBusquedaApellido.split(";");
 
         pacienteListPage.completeTextField("FiltroPaciente", apellidoBusqueda);
+        pacienteListPage.clickToOrderByName();
 
-        List<String[]> valores = pacienteListPage.getValuesList("Apellido, Nombre");
+        List<String[]> valores = pacienteListPage.obtenerListaDeValoresTabla("Pacientes","Apellido, Nombre");
 
         //Validamos apellidos y nombres listados (que todos los esperados aparezcan, y en orden)
         for (int i = 0; i < resultadoBusquedaApellido.length; i++) {
@@ -115,8 +103,9 @@ public class PacienteTest {
         String[] resultadoBusquedaApellidoyNombre = resultadosBusquedaApellidoYNombre.split(";");
 
         pacienteListPage.completeTextField("FiltroPaciente", apellidoynombreBusqueda);
+        pacienteListPage.clickToOrderByName();
 
-        List<String[]> valores = pacienteListPage.getValuesList("Apellido, Nombre");
+        List<String[]> valores = pacienteListPage.obtenerListaDeValoresTabla("Pacientes","Apellido, Nombre");
 
         //Validamos apellidos y nombres listados (que todos los esperados aparezcan, y en orden)
         for (int i = 0; i < resultadoBusquedaApellidoyNombre.length; i++) {
@@ -135,7 +124,8 @@ public class PacienteTest {
         commonElementsPage.clickMenuOption("Listado de Pacientes");
 
         pacienteListPage.completeTextField("FiltroPaciente", apellidoynombreBusquedaSinResultado);
-        String mensaje = pacienteListPage.obtenerMensajeListaVacia();
+        pacienteListPage.clickToOrderByName();
+        String mensaje = pacienteListPage.obtenerMensajeTablaVacia("Pacientes");
 
         Assert.assertEquals(mensaje, "(No se encontró ningún paciente)");
 
@@ -148,8 +138,9 @@ public class PacienteTest {
         commonElementsPage.clickMenuOption("Listado de Pacientes");
 
         pacienteListPage.completeTextField("FiltroPaciente", pacienteCarenteDeDatos);
-
-        List<String[]> valores = pacienteListPage.getValuesList("Domicilio", "Teléfono", "Celular", "Edad", "Obra Social");
+        pacienteListPage.clickToOrderByName();
+        
+        List<String[]> valores = pacienteListPage.obtenerListaDeValoresTabla("Pacientes","Domicilio", "Teléfono", "Celular", "Edad", "Obra Social");
 
         for (String[] vals : valores) {
             for (String s : vals) {
@@ -240,7 +231,7 @@ public class PacienteTest {
 
         commonElementsPage.clickMenuOption("Listado de Pacientes");
 
-        String[] paciente = pacienteListPage.buscarPaciente(pacienteData[0] + ", " + pacienteData[1]);
+        String[] paciente = pacienteListPage.buscarElementoEnTabla("Pacientes",null,"Apellido, Nombre="+ pacienteData[0] + ", " + pacienteData[1]);
 
         //Checkeamos que el paciente no se haya creado
         Assert.assertNull(paciente);
@@ -293,8 +284,8 @@ public class PacienteTest {
 //      Assert.assertEquals(commonElementsPage.getPageMenuItems(),"Home>Pacientes>Tratamientos de "+pacienteData[0]+", "+pacienteData[1]);
         commonElementsPage.clickMenuOption("Listado de Pacientes");
 
-        String[] paciente = pacienteListPage.buscarPaciente(pacienteData[0] + ", " + pacienteData[1]);
-
+        String[] paciente = pacienteListPage.buscarElementoEnTabla("Pacientes",null,"Apellido, Nombre="+ pacienteData[0] + ", " + pacienteData[1]);
+        
         //Checkeamos que se haya creado
         Assert.assertNotNull(paciente);
 
@@ -306,7 +297,7 @@ public class PacienteTest {
         Assert.assertEquals(paciente[4], calcularEdad(pacienteData[6]));
         Assert.assertEquals(paciente[5], pacienteData[7]);
 
-        pacienteListPage.buscarPaciente(pacienteData[0] + ", " + pacienteData[1],"Editar");
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Modificar","Apellido, Nombre="+ pacienteData[0] + ", " + pacienteData[1]);
         
         //Checkeamos que la data que muestra al querer editar el paciente sea correcta
         Assert.assertEquals(pacienteEditPage.getTextInTextField("Apellido"), pacienteData[0]);
@@ -361,8 +352,8 @@ public class PacienteTest {
 
         String[] newPacienteData = pacienteAEditar.split(";");
         String[] oldPacienteFullData = pacienteACrear.split(";");
-        String[] oldPacienteData = pacienteListPage.buscarPaciente(newPacienteData[0] + ", " + newPacienteData[1], "Editar");
-
+        String[] oldPacienteData = pacienteListPage.buscarElementoEnTabla("Pacientes","Modificar","Apellido, Nombre="+ newPacienteData[0] + ", " + newPacienteData[1]);
+        
         pacienteEditPage.completeTextField("Apellido", newPacienteData[0]);
         pacienteEditPage.completeTextField("Nombre", newPacienteData[1]);
         pacienteEditPage.completeTextField("DNI", newPacienteData[2]);
@@ -377,8 +368,8 @@ public class PacienteTest {
         pacienteEditPage.clickButton("Cancelar");
 
         //Buscamos el paciente y validamos que tenga los datos viejos
-        String[] paciente = pacienteListPage.buscarPaciente(newPacienteData[0] + ", " + newPacienteData[1]);
-
+        String[] paciente = pacienteListPage.buscarElementoEnTabla("Pacientes",null,"Apellido, Nombre="+ newPacienteData[0] + ", " + newPacienteData[1]);
+        
         //Checkeamos que la data que muestra la lista sea correcta
         Assert.assertEquals(paciente[0], oldPacienteData[0]);
         Assert.assertEquals(paciente[1], oldPacienteData[1]);
@@ -389,7 +380,7 @@ public class PacienteTest {
 
         
         //Buscamos el paciente y abrimos el popup de edición para ver que los datos sean los datos viejos
-        pacienteListPage.buscarPaciente(newPacienteData[0] + ", " + newPacienteData[1],"Editar");
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Modificar","Apellido, Nombre="+ newPacienteData[0] + ", " + newPacienteData[1]);
         
         Assert.assertEquals(pacienteEditPage.getTextInTextField("Apellido"), oldPacienteFullData[0]);
         Assert.assertEquals(pacienteEditPage.getTextInTextField("Nombre"), oldPacienteFullData[1]);
@@ -413,7 +404,7 @@ public class PacienteTest {
         
         commonElementsPage.clickMenuOption("Listado de Pacientes");
 
-        pacienteListPage.buscarPaciente(pacienteData[0] + ", " + pacienteData[1],"Editar");
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Modificar","Apellido, Nombre="+ pacienteData[0] + ", " + pacienteData[1]);
         
         pacienteEditPage.completeTextField("Apellido","");
         pacienteEditPage.completeTextField("Nombre","");
@@ -472,7 +463,7 @@ public class PacienteTest {
         commonElementsPage.clickMenuOption("Listado de Pacientes");
 
         String[] newFullPacienteData = pacienteAEditar.split(";");
-        String[] oldPacienteData = pacienteListPage.buscarPaciente(newFullPacienteData[0] + ", " + newFullPacienteData[1], "Editar");
+        String[] oldPacienteData = pacienteListPage.buscarElementoEnTabla("Pacientes","Modificar","Apellido, Nombre="+ newFullPacienteData[0] + ", " + newFullPacienteData[1]);
 
         pacienteEditPage.completeTextField("Apellido", newFullPacienteData[0]);
         pacienteEditPage.completeTextField("Nombre", newFullPacienteData[1]);
@@ -491,7 +482,7 @@ public class PacienteTest {
         Assert.assertTrue(pacienteListPage.toasterMessageDisplayed("Success", "Paciente modificado con éxito.", 2));
 
         //Buscamos el paciente y validamos que tenga los datos viejos
-        String[] pacienteTableData = pacienteListPage.buscarPaciente(newFullPacienteData[0] + ", " + newFullPacienteData[1]);
+        String[] pacienteTableData = pacienteListPage.buscarElementoEnTabla("Pacientes",null,"Apellido, Nombre="+ newFullPacienteData[0] + ", " + newFullPacienteData[1]);
 
         //Checkeamos que la data que muestra la lista sea correcta
         Assert.assertEquals(pacienteTableData[0], newFullPacienteData[0]+", "+newFullPacienteData[1]);
@@ -501,8 +492,8 @@ public class PacienteTest {
         Assert.assertEquals(pacienteTableData[4], calcularEdad(newFullPacienteData[6]));
         Assert.assertEquals(pacienteTableData[5], newFullPacienteData[7]);
 
-        pacienteListPage.buscarPaciente(newFullPacienteData[0] + ", " + newFullPacienteData[1],"Editar");
-        
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Modificar","Apellido, Nombre="+ newFullPacienteData[0] + ", " + newFullPacienteData[1]);
+
         //Checkeamos que en el popup de paciente la data este actualizada también
         Assert.assertEquals(pacienteEditPage.getTextInTextField("Apellido"), newFullPacienteData[0]);
         Assert.assertEquals(pacienteEditPage.getTextInTextField("Nombre"), newFullPacienteData[1]);
@@ -526,10 +517,10 @@ public class PacienteTest {
         String[] pacienteFullData = pacienteAEditar.split(";");
         
         //Seleccionamos el usuario para eliminarlo, pero cancelamos eliminación
-        String[] pacienteTableData = pacienteListPage.buscarPaciente(pacienteFullData[0] + ", " + pacienteFullData[1], "Eliminar");
-
-        pacienteListPage.confirmPacienteDelete(false);
-        pacienteTableData = pacienteListPage.buscarPaciente(pacienteFullData[0] + ", " + pacienteFullData[1]);
+        String[] pacienteTableData = pacienteListPage.buscarElementoEnTabla("Pacientes","Eliminar","Apellido, Nombre="+ pacienteFullData[0] + ", " + pacienteFullData[1]);
+        
+        pacienteListPage.confirmDelete(false);
+        pacienteTableData = pacienteListPage.buscarElementoEnTabla("Pacientes",null,"Apellido, Nombre="+ pacienteFullData[0] + ", " + pacienteFullData[1]);
         
         //Validamos que el usuario aún existe
         Assert.assertNotNull(pacienteTableData);
@@ -545,14 +536,15 @@ public class PacienteTest {
         String[] pacienteFullData = pacienteAEditar.split(";");
         
         //Seleccionamos el usuario para eliminarlo y confirmamos eliminación
-        String[] pacienteTableData = pacienteListPage.buscarPaciente(pacienteFullData[0] + ", " + pacienteFullData[1], "Eliminar");
-
-        pacienteListPage.confirmPacienteDelete(true);
+        String[] pacienteTableData = pacienteListPage.buscarElementoEnTabla("Pacientes","Eliminar","Apellido, Nombre="+ pacienteFullData[0] + ", " + pacienteFullData[1]);
+        
+        pacienteListPage.confirmDelete(true);
         
         //Validamos el mensaje de confirmación y que el usuario no se liste más
         Assert.assertTrue(pacienteListPage.toasterMessageDisplayed("Success", "Paciente eliminado con éxito.", 2));
         
-        pacienteTableData = pacienteListPage.buscarPaciente(pacienteFullData[0] + ", " + pacienteFullData[1]);
+        pacienteTableData = pacienteListPage.buscarElementoEnTabla("Pacientes",null,"Apellido, Nombre="+ pacienteFullData[0] + ", " + pacienteFullData[1]);
+        
         Assert.assertNull(pacienteTableData);
         
     }
@@ -566,7 +558,7 @@ public class PacienteTest {
         String mesNac = fechaNacimiento.split("/")[1];
         String anioNac = fechaNacimiento.split("/")[2];
 
-        date2.set(Integer.parseInt(anioNac), Integer.parseInt(mesNac), Integer.parseInt(diaNac));
+        date2.set(Integer.parseInt(anioNac), Integer.parseInt(mesNac)-1, Integer.parseInt(diaNac));
 
         Calendar aux = Calendar.getInstance();
         aux.setTimeInMillis(date1.getTimeInMillis() - date2.getTimeInMillis());
@@ -575,11 +567,6 @@ public class PacienteTest {
         int edad = aux.get(Calendar.YEAR) - 1970;
 
         return "" + edad;
-    }
-
-    @AfterSuite(alwaysRun = true)
-    public void afterSuite() {
-
     }
 
 }

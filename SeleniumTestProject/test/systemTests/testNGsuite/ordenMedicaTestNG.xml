@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="SeleniumTestProject" verbose = "2">
+    <parameter name="browser" value="Chrome"/>
+    <parameter name="driverPath" value="src\\drivers\\chromedriver_2.29.exe"/>
+    <parameter name="startUrl" value="http://localhost:19992/deltagestion/faces/protected/paciente/List.xhtml"/>
+    <parameter name="reportsFolder" value="F:\\" />
+    <parameter name="username" value="pepe" />
+    <parameter name="password" value="1234" />
+    <test name="Orden Medica Test">
+        <parameter name="usuarioSinOS" value="Rodriguez, Juana" />
+        <parameter name="tratamientoUsuarioSinOS" value="Fisiokinesioterapia;10;No Particulat;-" />
+        <parameter name="usuarioConOSyNroAfiliado" value="Fernandez, Diego" />
+        <parameter name="tratamParticUsuarioConOSyNroAfld" value="Estética Masajes;4;Particular;Torcimiento de tobillo" />
+        <parameter name="tratamPorOsUsuarioConOSyNroAfldConOrd" value="Fisioterapia;15;No Particular;-" />
+        <parameter name="ordenTratamConOrdConOs" value="3;IAPOS;124578945"/>
+        <parameter name="orden2TratamConOrdConOs" value="2;IAPOS;124578945"/>
+        <parameter name="tratamPorOsUsuarioConOSyNroAfldSinOrd" value="Fisiokinesioterapia;5;No Particular;-" />
+        <parameter name="usuarioConOSSinNroAfiliado" value="Alvarez, Ernesto" />
+        <parameter name="tratamPorOsUsuarioConOSSinNroAfldConOrd" value="Fisiokinesioterapia;10;No Particular;-" />
+        <parameter name="ordenTratamConOrdConOsSinNroAfiliafo" value="5;JERARQUICOS SALUD;-"/>
+        <classes>
+           <class name="systemTests.tests.OrdenMedicaTest">
+                <methods>
+                    <include name="test_mensajeNoOsDentroTratamientoPacienteSinOS"/>
+                    <include name="test_noHayTablaOrdenMedicaEnTratamientoParticular"/>     
+                    <include name="test_mensajeTratamientoTablaOrdenesMedicasVacia"/>
+                    <include name="test_validacionesDeFormatoCreacionDeOrden"/>
+                    <include name="test_validacionOrdenUnicaSobrepasaCantSesionesDelTratamiento"/>
+                    <include name="test_validacionMultiplesOrdenesSobrepasaCantSesionesFaltanTratamiento"/>  
+                    <include name="test_creacionOrdenMenosSesionesDeFaltantesDelTratamiento"/>
+                    <include name="test_creacionOrdenSesionesIgualAFaltantesDelTratamiento"/>
+                    <include name="test_infoOrdenMedicaPacienteConTodaLaInfo"/>
+                    <include name="test_infoOrdenMedicaPacienteSinNroAfiliado"/>
+                    <include name="test_validacionAutorizarOrdenTratamiento"/>
+                    <include name="test_cancelarAutorizarOrdenTratamiento"/>
+                    <include name="test_autorizarOrdenTratamientoExitosamente"/>
+                    <include name="test_repetirCodAutorizacionEnDistintasOrdenesTratamiento"/>
+                    <include name="test_cancelarEliminacionOrdenTratamiento"/>
+                    <include name="test_eliminacionExitosaOrdenTratamiento"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

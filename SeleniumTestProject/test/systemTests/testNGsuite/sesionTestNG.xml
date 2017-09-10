@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="SeleniumTestProject" verbose = "2">
+    <parameter name="browser" value="Chrome"/>
+    <parameter name="driverPath" value="src\\drivers\\chromedriver_2.29.exe"/>
+    <parameter name="startUrl" value="http://localhost:19992/deltagestion/faces/protected/paciente/List.xhtml"/>
+    <parameter name="reportsFolder" value="F:\\" />
+    <parameter name="username" value="pepe" />
+    <parameter name="password" value="1234" />
+    <test name="Sesion Test">
+        <parameter name="pacienteConTratamientos" value="Gomez, Gerardo" />
+        <parameter name="tratamientoUsuarioSinOS" value="Kinesioterapia;10;No Particular;-;0" />
+        <parameter name="sesionTratamientoUsuarioSinOS" value="Lunes" />
+        <parameter name="sesionPasadaTratamientoUsuarioSinOS" value="Lunes" />
+        <parameter name="tratamientoUsuarioConDiagnostico" value="Fisiokinesioterapia;5;No Particular;Pinzamiento vertebra lumbar;2" />
+        <parameter name="sesionConDiagnostico" value="3;20/06/2017 08:00:00;No" />
+        <parameter name="sesionToEdit" value="5;22/06/2017 08:00:00;No" />
+        <parameter name="sesionTranscurrida" value="1;16/05/2017 08:00:00;Si" />
+        <parameter name="sesionToEditToSameDate1" value="3;20/06/2017 08:00:00;No" />
+        <parameter name="sesionToEditToSameDate2" value="4;21/06/2017 08:00:00;No" />
+        <parameter name="tratamientoUsuarioSinDiagnostico" value="Fisiokinesioterapia;3;No Particular;-;3" />
+        <parameter name="sesionSinDiagnostico" value="2;28/04/2017 10:15:00;Si" />
+        <parameter name="tratamientoConSesionesToEdit" value="Estética Masajes;7;Particular;-;1" />
+        <parameter name="sesionToEditCuenta" value="1;30/05/2017 08:00:00;Si" />
+        <parameter name="sesionToEditFinDeSemana" value="2;04/07/2017 08:00:00;No" />
+        <parameter name="sesionToEditFechaPasada" value="3;06/07/2017 08:00:00;No" />
+        <parameter name="sesionToEditFechaPasadaDia" value="Lunes" />
+        <parameter name="tratamientoIncompletoConSesionesQueNoCuentan" value="Fisiokinesioterapia;4;No Particular;-;2" />
+        <parameter name="tratamientoCompletoConSesionesQueNoCuentan" value="Fisiokinesioterapia;3;No Particular;-;3" />
+        <parameter name="sesionFailMarcarCuenta" value="3;02/05/2017 10:15:00;Si"/>
+        <parameter name="tratamientoFailFinalizar" value="Fisiokinesioterapia;5;No Particular;Pinzamiento vertebra lumbar;2" />
+        <parameter name="tratamientoAFinalizar" value="Fisiokinesioterapia;6;No Particular;-;3" />
+        <classes>
+           <class name="systemTests.tests.SesionTest">
+                <methods>
+                    <include name="test_mensajeTratamientoTablaSesionesVacia"/>
+                    <include name="test_validacionCamposVaciosCreacionSesion"/>
+                    <include name="test_validacionFormatoDeFechaCreacionSesion"/>
+                    <include name="test_cancelarCreacionSesion"/>
+                    <include name="test_crearNuevaSesion"/>
+                    <include name="test_failCrearNuevaSesionFinDeSemana"/>
+                    <include name="test_failCrearDosSesionesMismoHorario"/>
+                    <include name="test_failCrearDosSesionesSolapadasHorario"/>
+                    <include name="test_crearNuevaSesionFechaPasada"/>
+                    <include name="test_datosEdicionSesionConDiagnostico"/>
+                    <include name="test_datosEdicionSesionSinDiagnostico"/>
+                    <include name="test_validacionCamposVaciosEdicionSesion"/>
+                    <include name="test_validacionFormatoDeFechaEdicionSesion"/>
+                    <include name="test_cancelarEdicionSesion"/>
+                    <include name="test_editarSesion"/>
+                    <include name="test_validarNoSePuedeEditarFechaSesionTranscurrida"/>
+                    <include name="test_failEditarDosSesionesMismoHorario"/>
+                    <include name="test_failEditarDosSesionesSolapadasHorario"/>
+                    <include name="test_failEditarSesionFinDeSemana"/>
+                    <include name="test_editarNuevaSesionFechaPasada"/>
+                    <include name="test_editarSesionTranscurridaNoCuenta"/>
+                    <include name="test_editarTratamientoMenosCantidadSesionesQueCuentan"/>
+                    <include name="test_failEditarTratamientoMenosCantidadSesionesQueCuentan"/>
+                    <include name="test_failMarcarSesionCuentanCuandoTopeYaAlcanzado"/>
+                    <include name="test_failMarcarTratamientoFinalizado"/>
+                    <include name="test_marcarTratamientoFinalizado"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

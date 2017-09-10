@@ -2,6 +2,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="SeleniumTestProject" verbose = "2">
     <test name="Login Test">
+        <parameter name="browser" value="Chrome"/>
+        <parameter name="driverPath" value="src\\drivers\\chromedriver_2.29.exe"/>
+        <parameter name="startUrl" value="http://localhost:19992/deltagestion/"/>
+        <parameter name="reportsFolder" value="F:\\" />
         <parameter name="username" value="pepe" />
         <parameter name="password" value="1234" />
         <parameter name="wrongUsername" value="alfon" />

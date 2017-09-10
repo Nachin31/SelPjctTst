@@ -1,6 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="SeleniumTestProject" verbose = "2">
+    <parameter name="browser" value="Chrome"/>
+    <parameter name="driverPath" value="src\\drivers\\chromedriver_2.29.exe"/>
+    <parameter name="startUrl" value="http://localhost:19992/deltagestion/faces/protected/paciente/List.xhtml"/>
+    <parameter name="reportsFolder" value="F:\\" />
     <parameter name="username" value="pepe" />
     <parameter name="password" value="1234" />
     <test name="Tratamiento Test">
@@ -23,7 +27,6 @@
                     <include name="test_cancelarEliminacionDeTratamiento"/>
                     <include name="test_eliminacionExitosaTratamientoConVariosListados"/>
                     <include name="test_eliminacionExitosaTratamientoUnicoListado"/>
-                    
                 </methods>
             </class>
         </classes>

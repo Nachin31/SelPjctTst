@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="SeleniumTestProject" verbose = "2">
+    <parameter name="browser" value="Chrome"/>
+    <parameter name="driverPath" value="src\\drivers\\chromedriver_2.29.exe"/>
+    <parameter name="startUrl" value="http://localhost:19992/deltagestion/"/>
+    <parameter name="reportsFolder" value="F:\\" />
+    <parameter name="username" value="pepe" />
+    <parameter name="password" value="1234" />
+    <test name="Caja Test">
+        <parameter name="ingresoACrear1" value="Sesión particular;20.5;18;Cobro de sesiones" />
+        <parameter name="ingresoACrear2" value="Otro;5;10;-" />
+        <parameter name="egresoACrear1" value="Tapping;20;20;Compra semanal" />
+        <parameter name="egresoACrear2" value="Estampilla;100;2;-" />
+        <classes>
+           <class name="systemTests.tests.CajaTest">
+                <methods>
+                    <include name="test_mensajeTablaMovimientosVacia"/>
+                    <include name="test_cancelarCreacionIngreso"/>
+                    <include name="test_cancelarCreacionEgreso"/>
+                    <include name="test_crearIngresoConTodosLosDatos"/>
+                    <include name="test_crearIngresoSinDescripcion"/>
+                    <include name="test_crearEgresoConTodosLosDatos"/>
+                    <include name="test_crearEgresoSinDescripcion"/>
+                    <include name="test_validacionCamposObligatoriosCreacionIngreso"/>
+                    <include name="test_validacionPrecioPorUnidadPositivoCreacionIngreso"/>
+                    <include name="test_validacionCantidadPositivaCreacionIngreso"/>
+                    <include name="test_validacionLargoDescripcionCreacionIngreso"/>
+                    <include name="test_validacionCamposObligatoriosCreacionEgreso"/>
+                    <include name="test_validacionPrecioPorUnidadPositivoCreacionEgreso"/>
+                    <include name="test_validacionCantidadPositivaCreacionEgreso"/>
+                    <include name="test_validacionLargoDescripcionCreacionEgreso"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

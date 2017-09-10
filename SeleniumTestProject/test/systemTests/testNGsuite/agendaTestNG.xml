@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="SeleniumTestProject" verbose = "2">
+    <parameter name="browser" value="Chrome"/>
+    <parameter name="driverPath" value="src\\drivers\\chromedriver_2.29.exe"/>
+    <parameter name="startUrl" value="http://localhost:19992/deltagestion"/>
+    <parameter name="reportsFolder" value="F:\\" />
+    <parameter name="username" value="pepe" />
+    <parameter name="password" value="1234" />
+    <test name="Agenda Test">
+        <parameter name="pacienteACrearTodosCampos" value="Pacientest;PTAUno;4691122;34245121245" />
+        <parameter name="pacienteACrearCamposObligatorios" value="Pacientest;PTADos;4693344;34245732345" />
+        <parameter name="pacienteConTratamientos" value="Hernandez, Pedro" />
+        <parameter name="diaValidoCrearSesion" value="Lunes" />
+        <parameter name="tratamientoCargarRapido" value="Fisioterapia;10;No Particular;-;0" />
+        <classes>
+           <class name="systemTests.tests.AgendaTest">
+                <methods>
+                    <include name="test_validacionCamposObligatoriosCargaRapidaPaciente"/>
+                    <include name="test_validacionTelefonosNumericosCargaRapidaPaciente"/>
+                    <include name="test_validacionCamposObligatoriosCargaRapidaTratamiento"/>
+                    <include name="test_validacionSesionSeaNumeroCargaRapidaTratamiento"/>
+                    <include name="test_validacionSesionSeaPositivaCargaRapidaTratamiento"/>
+                    <include name="test_validacionSesionSeaEnteraCargaRapidaTratamiento"/>
+                    <include name="test_cancelarCargaRapidaPaciente"/>
+                    <include name="test_cargaRapidaPacienteCamposObligatoriosSuccessful"/>
+                    <include name="test_cargaRapidaPacienteTodosCamposSuccessful"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

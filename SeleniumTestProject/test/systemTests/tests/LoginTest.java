@@ -7,41 +7,26 @@ package systemTests.tests;
  */
 
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Selenide.*;
-import com.codeborne.selenide.Configuration;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
-import pageObjects.CommonElementsPage;
-import pageObjects.LoginPage;
+import pageObjects.commonPageObjects.CommonElementsPage;
+import pageObjects.commonPageObjects.LoginPage;
 
 /**
  *
  * @author Nacho Gómez
  */
-public class LoginTest {
+public class LoginTest extends AutomatedTest {
     
     private LoginPage loginPage;
     private CommonElementsPage commonElementsPage;
     
-    @BeforeSuite
-    public void beforeSuite() throws Exception {
-        //We set driver parameters
-        System.setProperty("webdriver.chrome.driver","src\\drivers\\chromedriver_2.27.exe");
-        System.setProperty("selenide.browser", "Chrome");
-        
-        //General parameters
-        Configuration.timeout = 20000;
-        Configuration.reportsFolder = "F:\\";
-        
-        //Open the url which we want in Chrome
-        open("http://localhost:19992/deltagestion/");
-        
+    @BeforeClass
+    public void beforeClass() throws Exception {
         loginPage = new LoginPage();
         commonElementsPage = new CommonElementsPage();
-
     }
     
     @Test
@@ -146,11 +131,6 @@ public class LoginTest {
         
         Assert.assertEquals(commonElementsPage.getUserName(),username);
         Assert.assertEquals(commonElementsPage.getPageMenuItems(),"Home>Agenda");
-    }
-    
-    @AfterSuite(alwaysRun = true)
-    public void afterSuite(){
-        
     }
     
 }

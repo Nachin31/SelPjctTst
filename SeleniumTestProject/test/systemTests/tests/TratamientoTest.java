@@ -5,29 +5,24 @@
  */
 package systemTests.tests;
 
-import com.codeborne.selenide.Configuration;
-import static com.codeborne.selenide.Selenide.open;
-import java.util.List;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pageObjects.CommonElementsPage;
-import pageObjects.LoginPage;
-import pageObjects.PacienteListPage;
-import static com.codeborne.selenide.Selenide.open;
+import pageObjects.commonPageObjects.CommonElementsPage;
+import pageObjects.commonPageObjects.LoginPage;
+import pageObjects.pacientePageObjects.PacienteListPage;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import pageObjects.TratamientoCreatePage;
-import pageObjects.TratamientoEditPage;
-import pageObjects.TratamientoListPage;
+import org.testng.annotations.BeforeClass;
+import pageObjects.tratamientoPageObjects.TratamientoCreatePage;
+import pageObjects.tratamientoPageObjects.TratamientoEditPage;
+import pageObjects.tratamientoPageObjects.TratamientoListPage;
 
 /**
  *
  * @author Nacho Gómez
  */
-public class TratamientoTest {
+public class TratamientoTest extends AutomatedTest{
 
     private LoginPage loginPage;
     private CommonElementsPage commonElementsPage;
@@ -36,19 +31,9 @@ public class TratamientoTest {
     private TratamientoCreatePage tratamientoCreatePage;
     private TratamientoEditPage tratamientoEditPage;
 
-    @BeforeSuite
+    @BeforeClass
     @Parameters({"username", "password"})
-    public void beforeSuite(String username, String password) throws Exception {
-        //We set driver parameters
-        System.setProperty("webdriver.chrome.driver", "src\\drivers\\chromedriver_2.27.exe");
-        System.setProperty("selenide.browser", "Chrome");
-
-        //General parameters
-        Configuration.timeout = 20000;
-        Configuration.reportsFolder = "F:\\";
-
-        //Open the url which we want in Chrome
-        open("http://localhost:19992/deltagestion/faces/protected/paciente/List.xhtml");
+    public void beforeClass(String username, String password) throws Exception {
 
         loginPage = new LoginPage();
         commonElementsPage = new CommonElementsPage();
@@ -67,7 +52,7 @@ public class TratamientoTest {
     @Parameters({"pacienteSinTratamientos"})
     public void test_listaTratamientoVacia(String pacienteSinTratamientos) {
         
-        pacienteListPage.buscarPaciente(pacienteSinTratamientos,"Tratamientos");
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Tratamientos","Apellido, Nombre="+pacienteSinTratamientos);
         
         Assert.assertEquals(commonElementsPage.getPageMenuItems(), "Home>Pacientes>Tratamientos de "+pacienteSinTratamientos);
         
@@ -80,7 +65,8 @@ public class TratamientoTest {
     public void test_validacionTiposTratamientosParticulares(String pacienteSinTratamientos) {
         
         commonElementsPage.clickMenuOption("Listado de Pacientes");
-        pacienteListPage.buscarPaciente(pacienteSinTratamientos,"Tratamientos");
+
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Tratamientos","Apellido, Nombre="+pacienteSinTratamientos);
         
         tratamientoListPage.clickButton("AgregarTratamiento");
         
@@ -126,8 +112,9 @@ public class TratamientoTest {
     public void test_validacionesCreacionTratamiento(String pacienteSinTratamientos) {
         
         commonElementsPage.clickMenuOption("Listado de Pacientes");
-        pacienteListPage.buscarPaciente(pacienteSinTratamientos,"Tratamientos");
         
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Tratamientos","Apellido, Nombre="+pacienteSinTratamientos);
+
         tratamientoListPage.clickButton("AgregarTratamiento");
         
         //----- Se indica error de todos los campos ---
@@ -211,7 +198,8 @@ public class TratamientoTest {
         String[] tratamientoACrear = tratmientoACrearParticular.split(";");
         
         commonElementsPage.clickMenuOption("Listado de Pacientes");
-        pacienteListPage.buscarPaciente(pacienteSinTratamientos,"Tratamientos");
+        
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Tratamientos","Apellido, Nombre="+pacienteSinTratamientos);
         
         tratamientoListPage.clickButton("AgregarTratamiento");
         
@@ -254,7 +242,8 @@ public class TratamientoTest {
         String[] tratamientoACrear = tratmientoACrearParticular.split(";");
         
         commonElementsPage.clickMenuOption("Listado de Pacientes");
-        pacienteListPage.buscarPaciente(pacienteSinTratamientos,"Tratamientos");
+        
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Tratamientos","Apellido, Nombre="+pacienteSinTratamientos);
         
         tratamientoListPage.clickButton("AgregarTratamiento");
         
@@ -288,7 +277,6 @@ public class TratamientoTest {
         Assert.assertEquals(tratamientoTableData[3],"0/"+tratamientoACrear[1]);
         Assert.assertEquals(tratamientoTableData[4],tratamientoACrear[2].equals("Particular")?"Si":"No");
         Assert.assertEquals(tratamientoTableData[5],"En curso");
-        Assert.assertEquals(tratamientoTableData[6],"-");
         
         //Seleccionamos el tratamiento y validamos los datos ingresados previamente
         tratamientoListPage.buscarTratamiento(tratamientoACrear[0],tratamientoACrear[1],"Editar");
@@ -308,7 +296,8 @@ public class TratamientoTest {
         String[] tratamientoACrear = tratmientoACrearObraSocial.split(";");
         
         commonElementsPage.clickMenuOption("Listado de Pacientes");
-        pacienteListPage.buscarPaciente(pacienteSinTratamientos,"Tratamientos");
+        
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Tratamientos","Apellido, Nombre="+pacienteSinTratamientos);
         
         tratamientoListPage.clickButton("AgregarTratamiento");
         
@@ -342,7 +331,6 @@ public class TratamientoTest {
         Assert.assertEquals(tratamientoTableData[3],"0/"+tratamientoACrear[1]);
         Assert.assertEquals(tratamientoTableData[4],tratamientoACrear[2].equals("Particular")?"Si":"No");
         Assert.assertEquals(tratamientoTableData[5],"En curso");
-        Assert.assertEquals(tratamientoTableData[6],"-");
         
         //Seleccionado el tratamiento, validamos los datos ingresados previamente
         Assert.assertEquals(tratamientoEditPage.getTextInLabel("TipoTratamiento"),tratamientoACrear[0]);
@@ -361,7 +349,8 @@ public class TratamientoTest {
         String[] tratamientoObraSocial = tratmientoACrearObraSocial.split(";");
         
         commonElementsPage.clickMenuOption("Listado de Pacientes");
-        pacienteListPage.buscarPaciente(pacienteSinTratamientos,"Tratamientos");
+    
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Tratamientos","Apellido, Nombre="+pacienteSinTratamientos);
         
         String[] tratamientoPartTableData = tratamientoListPage.buscarTratamiento(tratamientoParticular[0],tratamientoParticular[1]);
         String[] tratamientoOSTableData = tratamientoListPage.buscarTratamiento(tratamientoObraSocial[0],tratamientoObraSocial[1]);
@@ -376,7 +365,6 @@ public class TratamientoTest {
         Assert.assertEquals(tratamientoPartTableData[3],"0/"+tratamientoParticular[1]);
         Assert.assertEquals(tratamientoPartTableData[4],tratamientoParticular[2].equals("Particular")?"Si":"No");
         Assert.assertEquals(tratamientoPartTableData[5],"En curso");
-        Assert.assertEquals(tratamientoPartTableData[6],"-");
         
         Assert.assertEquals(tratamientoOSTableData[0],getDateString(new Date()));
         Assert.assertEquals(tratamientoOSTableData[1],tratamientoObraSocial[0]);
@@ -384,7 +372,6 @@ public class TratamientoTest {
         Assert.assertEquals(tratamientoOSTableData[3],"0/"+tratamientoObraSocial[1]);
         Assert.assertEquals(tratamientoOSTableData[4],tratamientoObraSocial[2].equals("Particular")?"Si":"No");
         Assert.assertEquals(tratamientoOSTableData[5],"En curso");
-        Assert.assertEquals(tratamientoOSTableData[6],"-");
         
     }
     
@@ -395,7 +382,8 @@ public class TratamientoTest {
         String[] tratamientoObraSocial = tratmientoACrearObraSocial.split(";");
         
         commonElementsPage.clickMenuOption("Listado de Pacientes");
-        pacienteListPage.buscarPaciente(pacienteSinTratamientos,"Tratamientos");
+
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Tratamientos","Apellido, Nombre="+pacienteSinTratamientos);
         
         tratamientoListPage.buscarTratamiento(tratamientoObraSocial[0],tratamientoObraSocial[1],"Editar");
         
@@ -436,7 +424,8 @@ public class TratamientoTest {
         String[] tratamientoAEditar = tratmientoACrearObraSocial.split(";");
         
         commonElementsPage.clickMenuOption("Listado de Pacientes");
-        pacienteListPage.buscarPaciente(pacienteSinTratamientos,"Tratamientos");
+  
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Tratamientos","Apellido, Nombre="+pacienteSinTratamientos);
         
         tratamientoListPage.buscarTratamiento(tratamientoAEditar[0],tratamientoAEditar[1],"Editar");
         
@@ -448,7 +437,8 @@ public class TratamientoTest {
         
         //Buscamos ese tratamiento nuevamente con el nuevo valor de sesiones, de encontrarlo checkeamos la data mostrada en la tabla        
         commonElementsPage.clickMenuOption("Listado de Pacientes");
-        pacienteListPage.buscarPaciente(pacienteSinTratamientos,"Tratamientos");
+          
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Tratamientos","Apellido, Nombre="+pacienteSinTratamientos);
         
         String[] tratamientoTableData = tratamientoListPage.buscarTratamiento(tratamientoAEditar[0],"2");
         Assert.assertNotNull(tratamientoTableData);
@@ -459,7 +449,6 @@ public class TratamientoTest {
         Assert.assertEquals(tratamientoTableData[3],"0/2");
         Assert.assertEquals(tratamientoTableData[4],tratamientoAEditar[2].equals("Particular")?"Si":"No");
         Assert.assertEquals(tratamientoTableData[5],"En curso");
-        Assert.assertEquals(tratamientoTableData[6],"-");
         
         //Restituimos la cantidad de sesiones
         tratamientoListPage.buscarTratamiento(tratamientoAEditar[0],"2","Editar");
@@ -476,12 +465,13 @@ public class TratamientoTest {
         String[] tratamientoACrear = tratmientoACrearObraSocial.split(";");
         
         commonElementsPage.clickMenuOption("Listado de Pacientes");
-        pacienteListPage.buscarPaciente(pacienteSinTratamientos,"Tratamientos");
+   
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Tratamientos","Apellido, Nombre="+pacienteSinTratamientos);
         
         //Buscamos el tratamiento en la lista y validamos lo que muestra
         String[] tratamientoTableData = tratamientoListPage.buscarTratamiento(tratamientoACrear[0],tratamientoACrear[1],"Eliminar");
         
-        tratamientoListPage.confirmTratamientoDelete(false);
+        tratamientoListPage.confirmDelete(false);
         tratamientoTableData = tratamientoListPage.buscarTratamiento(tratamientoACrear[0],tratamientoACrear[1]);
         
         //Validamos que el usuario aún existe
@@ -496,12 +486,13 @@ public class TratamientoTest {
         String[] tratamientoACrear = tratmientoACrearObraSocial.split(";");
         
         commonElementsPage.clickMenuOption("Listado de Pacientes");
-        pacienteListPage.buscarPaciente(pacienteSinTratamientos,"Tratamientos");
+      
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Tratamientos","Apellido, Nombre="+pacienteSinTratamientos);
         
         //Buscamos el tratamiento en la lista y validamos lo que muestra
         String[] tratamientoTableData = tratamientoListPage.buscarTratamiento(tratamientoACrear[0],tratamientoACrear[1],"Eliminar");
         
-        tratamientoListPage.confirmTratamientoDelete(true);
+        tratamientoListPage.confirmDelete(true);
         
         //Validamos que el mensaje de éxito se muestre
         Assert.assertTrue(tratamientoListPage.toasterMessageDisplayed("Success", "Tratamiento eliminado con éxito.", 2));
@@ -520,12 +511,13 @@ public class TratamientoTest {
         String[] tratamientoACrear = tratmientoACrearParticular.split(";");
         
         commonElementsPage.clickMenuOption("Listado de Pacientes");
-        pacienteListPage.buscarPaciente(pacienteSinTratamientos,"Tratamientos");
+        
+        pacienteListPage.buscarElementoEnTabla("Pacientes","Tratamientos","Apellido, Nombre="+pacienteSinTratamientos);
         
         //Buscamos el tratamiento en la lista y validamos lo que muestra
         String[] tratamientoTableData = tratamientoListPage.buscarTratamiento(tratamientoACrear[0],tratamientoACrear[1],"Eliminar");
         
-        tratamientoListPage.confirmTratamientoDelete(true);
+        tratamientoListPage.confirmDelete(true);
         
         //Validamos que el mensaje de éxito se muestre
         Assert.assertTrue(tratamientoListPage.toasterMessageDisplayed("Success", "Tratamiento eliminado con éxito.", 2));
@@ -538,11 +530,6 @@ public class TratamientoTest {
     private String getDateString(Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
         return sdf.format(date);
-    }
-    
-    @AfterSuite(alwaysRun = true)
-    public void afterSuite() {
-
     }
 
 }
