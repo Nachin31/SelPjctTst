@@ -59,6 +59,8 @@ public class TratamientoCreatePage extends Page {
     
     public boolean getSelectOptionsEnabled(){
         
+        Selenide.sleep(500);
+        
         boolean particularEnabled = false;
         boolean osEnabled = false;
         

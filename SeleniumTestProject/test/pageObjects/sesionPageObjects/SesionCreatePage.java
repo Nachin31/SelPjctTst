@@ -23,5 +23,5 @@ public class SesionCreatePage extends Page{
         add("Button","Cancelar",By.id("SesionCreateForm:cancelarBtnCreateSesion"));
         setCloseArrowLocator(By.cssSelector("#SesionCreateDlg a"));
     }
-     
+    
 }

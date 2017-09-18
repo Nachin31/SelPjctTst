@@ -108,6 +108,8 @@ public class TratamientoListPage extends Page {
             
             List<SelenideElement> filas = $$(filasTabla_locator);
             filas = filas.subList(1,filas.size()); //Removemos el header de la talba}
+            
+            int indexOfOptions = $$(headers_locator).size()-1;
                     
             for(int j=0;j<filas.size() && tratamiento== null;j++){
                 SelenideElement f = filas.get(j);
@@ -122,13 +124,13 @@ public class TratamientoListPage extends Page {
                     tratamiento[5] = f.$$(By.tagName("td")).get(5).getText();
                     if(action==null);
                     else if(action.equals("Editar"))
-                        f.$$(By.tagName("td")).get(6).$$(By.tagName("button")).get(0).click();
+                        f.$$(By.tagName("td")).get(indexOfOptions).$$(By.tagName("button")).get(0).click();
                     else if(action.equals("GenerarConsentimiento"))
-                        f.$$(By.tagName("td")).get(6).$$(By.tagName("button")).get(1).click();
+                        f.$$(By.tagName("td")).get(indexOfOptions).$$(By.tagName("button")).get(1).click();
                     else if(action.equals("Eliminar"))
-                        f.$$(By.tagName("td")).get(6).$$(By.tagName("button")).get(2).click();
+                        f.$$(By.tagName("td")).get(indexOfOptions).$$(By.tagName("button")).get(2).click();
                     else if(action.equals("Estudios"))
-                        f.$$(By.tagName("td")).get(6).$$(By.tagName("button")).get(3).click();
+                        f.$$(By.tagName("td")).get(indexOfOptions).$$(By.tagName("button")).get(3).click();
                 }
             }
             

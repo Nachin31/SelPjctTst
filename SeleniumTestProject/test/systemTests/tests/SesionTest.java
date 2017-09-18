@@ -163,7 +163,7 @@ public class SesionTest extends AutomatedTest{
         sesionCreatePage.completeTextField("Fecha",sesionDate);
         sesionCreatePage.clickButton("Guardar");
         
-        Assert.assertEquals(sesionCreatePage.getToasterMessageCount(1), 1);
+        Assert.assertEquals(sesionCreatePage.getToasterMessageCount(2), 1);
         Assert.assertTrue(sesionCreatePage.toasterMessageDisplayed("Success", "Sesión creada con éxito."),
                     "No se mostro el mensaje de éxito de creación de la sesión o se ha mostrado con errores.");
         Assert.assertNotNull(tratamientoEditPage.buscarElementoEnTabla("Sesiones",null,"Fecha="+sesionDate),"No se agrego la nueva sesión a la tabla.");
@@ -266,7 +266,7 @@ public class SesionTest extends AutomatedTest{
         sesionCreatePage.completeTextField("Fecha",sesionDate);
         sesionCreatePage.clickButton("Guardar");
         
-        Assert.assertEquals(sesionCreatePage.getToasterMessageCount(1), 1);
+        Assert.assertEquals(sesionCreatePage.getToasterMessageCount(2), 1);
         Assert.assertTrue(sesionCreatePage.toasterMessageDisplayed("Success", "Sesión creada con éxito."),
                     "No se mostro el mensaje de éxito de creación de la sesión o se ha mostrado con errores.");
         Assert.assertNotNull(tratamientoEditPage.buscarElementoEnTabla("Sesiones",null,"Fecha="+sesionDate),"No se agrego la nueva sesión a la tabla.");
@@ -546,7 +546,7 @@ public class SesionTest extends AutomatedTest{
         sesionEditPage.completeTextField("Fecha",sesionDate);
         sesionEditPage.clickButton("Guardar");
         
-        Assert.assertEquals(sesionCreatePage.getToasterMessageCount(1), 1);
+        Assert.assertEquals(sesionCreatePage.getToasterMessageCount(1), 2);
         Assert.assertTrue(sesionCreatePage.toasterMessageDisplayed("Success", "Sesión editada con éxito."),
                     "No se mostro el mensaje de éxito de edición de la sesión o se ha mostrado con errores.");
         Assert.assertNotNull(tratamientoEditPage.buscarElementoEnTabla("Sesiones",null,"Fecha="+sesionDate),"No se agrego la nueva sesión a la tabla.");

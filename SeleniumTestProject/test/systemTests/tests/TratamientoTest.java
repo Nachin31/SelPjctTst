@@ -13,6 +13,7 @@ import pageObjects.commonPageObjects.LoginPage;
 import pageObjects.pacientePageObjects.PacienteListPage;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import pageObjects.tratamientoPageObjects.TratamientoCreatePage;
 import pageObjects.tratamientoPageObjects.TratamientoEditPage;
@@ -530,6 +531,11 @@ public class TratamientoTest extends AutomatedTest{
     private String getDateString(Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
         return sdf.format(date);
+    }
+    
+    @AfterMethod
+    public void closePopupsIfDisplayed(){
+        tratamientoCreatePage.cerrarPopup();
     }
 
 }

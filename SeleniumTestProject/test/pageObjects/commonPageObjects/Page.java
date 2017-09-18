@@ -75,6 +75,7 @@ public class Page {
     public void clickButton(String buttonName){
         SelenideElement button = $(buttons.get(buttonName));
         button.click();
+        Selenide.sleep(1000);
     }
     
     public String getTextInTextField(String textFieldName){
